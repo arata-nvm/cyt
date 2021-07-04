@@ -3,6 +3,7 @@ module github.com/arata-nvm/cyt
 go 1.15
 
 require (
+	github.com/fatih/color v1.12.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
