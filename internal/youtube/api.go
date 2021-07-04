@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"sort"
 	"time"
 
 	"github.com/arata-nvm/cyt/internal/config"
@@ -83,4 +84,20 @@ func GetChannelName(channelId string) (string, error) {
 	}
 
 	return channels[0].Name, nil
+}
+
+func GetRecentVideos() ([]*model.Video, error) {
+	channels := config.GetChannels()
+	videos := make([]*model.Video, 0, len(channels)*5)
+	for _, channelId := range channels {
+		channelsVideos, err := SearchVideoBy(channelId)
+		if err != nil {
+			return nil, err
+		}
+		videos = append(videos, channelsVideos...)
+	}
+
+	sort.Slice(videos, func(i, j int) bool { return videos[j].PublishedAt.Before(videos[i].PublishedAt) })
+
+	return videos, nil
 }
